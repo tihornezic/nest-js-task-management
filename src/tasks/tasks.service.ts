@@ -90,6 +90,15 @@ export class TasksService {
   //   return task;
   // }
 
+  async deleteTask(id: string): Promise<void> {
+    // delete does not check that the entity exists in the db beforehand
+    const result = await this.tasksRepository.delete(id);
+
+    if (result.affected === 0) {
+      throw new NotFoundException(`Tash with ID "${id}" not found`);
+    }
+  }
+
   // deleteTask(id: string): void {
   //   const found = this.getTaskById(id);
 
