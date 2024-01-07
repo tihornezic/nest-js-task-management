@@ -23,7 +23,7 @@ export class TasksService {
   // for a class is public
 
   getTasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
-    //
+    return this.tasksRepository.getTasks(filterDto);
   }
 
   async getTaskById(id: string): Promise<Task> {
