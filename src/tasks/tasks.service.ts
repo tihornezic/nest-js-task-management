@@ -3,6 +3,7 @@ import { TasksRepository } from './tasks.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from './task.entity';
 import { CreateTaskDto } from './dto/create-task.dto';
+import { TaskStatus } from './task-status.enum';
 
 @Injectable()
 export class TasksService {
@@ -104,6 +105,16 @@ export class TasksService {
 
   //   this.tasks = this.tasks.filter((task) => task.id !== found.id);
   // }
+
+  async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
+    const task = await this.getTaskById(id);
+
+    task.status = status;
+
+    await this.tasksRepository.save(task);
+
+    return task;
+  }
 
   // updateTaskStatus(id: string, status: TaskStatus): Task {
   //   const taskToUpdate = this.getTaskById(id);
