@@ -7,17 +7,20 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Task } from './task.entity';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 // a controller's job is only to simply receive a request,
 // delegate it to whatever its needed to achieve the goal,
 // and then return the response
 @Controller('tasks')
+@UseGuards(AuthGuard())
 export class TasksController {
   // although this works, there is a better (cleaner) to do it
   /* // define property
