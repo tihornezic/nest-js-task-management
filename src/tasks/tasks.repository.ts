@@ -12,8 +12,13 @@ export class TasksRepository extends Repository<Task> {
     super(Task, dataSource.createEntityManager());
   }
 
-  async getTasks({ status, search }: GetTasksFilterDto): Promise<Task[]> {
+  async getTasks(
+    { status, search }: GetTasksFilterDto,
+    user: User,
+  ): Promise<Task[]> {
     const query = this.createQueryBuilder('task');
+    // only give us the tasks that are owned by the current user
+    query.where({ user });
 
     if (status) {
       query.andWhere('task.status = :status', { status });
